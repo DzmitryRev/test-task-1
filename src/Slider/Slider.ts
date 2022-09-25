@@ -2,6 +2,7 @@ import {ISlide} from "../index";
 import {Bubble} from "../Bubble/Bubble";
 
 
+
 export class Slider {
     root: HTMLElement
     slides: ISlide[]
@@ -45,6 +46,17 @@ export class Slider {
     }
 
     previousSlide() {
+        this.bubbles.forEach(item => {
+            const itemPos = item.getBoundingClientRect()
+            item.animate([
+                {left: itemPos.left + "px"},
+                {left: -500 + "px"},
+                {left: itemPos.left + "px"}
+            ], {
+                duration: 1500,
+                fill: "forwards"
+            })
+        })
         this.currentSlideIndex = this.currentSlideIndex === 0 ? this.slides.length - 1 : this.currentSlideIndex - 1;
         this.prevSlide = this.currentSlide;
         this.currentSlide = this.slides[this.currentSlideIndex];
@@ -68,12 +80,11 @@ export class Slider {
         infoP.classList.add("info-p");
         this.infoP = infoP;
         this.infoPrevBtn = document.createElement("button");
+        this.infoPrevBtn.classList.add("slider__btn")
         const arrow = document.createElement("img");
-        // arrow.src = "../assets/arr.png"
-        // this.infoPrevBtn.insertAdjacentElement("beforeend", arrow)
-        this.infoPrevBtn.innerText = "Prev";
+        this.infoPrevBtn.insertAdjacentElement("beforeend", arrow)
         this.infoNextBtn = document.createElement("button");
-        this.infoNextBtn.innerText = "Next";
+        this.infoNextBtn.classList.add("slider__btn")
         const img = document.createElement("img");
         img.classList.add("slider__laptop-img");
         const caseImg = document.createElement("img");
@@ -83,6 +94,7 @@ export class Slider {
         const laptop = document.createElement("div");
         laptop.classList.add("slider__laptop");
         const btnContainer = document.createElement("div");
+        btnContainer.classList.add("slider__btns-container");
         const bottomContainer = document.createElement("div");
         bottomContainer.classList.add("bottom-container");
         this.directionEl = document.createElement("p");

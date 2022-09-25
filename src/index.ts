@@ -3,7 +3,6 @@ import "./styles/index.scss";
 import "./assets/laptop.png";
 import "./assets/case-1.png";
 import "./assets/case-2.png";
-import "./assets/arr.png";
 
 export interface ISlide {
     title: string;
