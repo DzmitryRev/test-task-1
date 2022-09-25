@@ -9,6 +9,7 @@
 }
 
 .slider {
+   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -16,12 +17,37 @@
   color: $font-white;
   padding: 100px;
   min-height: 100vh;
+  &__bubble {
+    border-radius: 100%;
+    position: absolute;
+    background-color: antiquewhite;
+    background: linear-gradient(0deg, rgba(68, 104, 90, 0.44), rgba(68, 104, 90, 0.44)),
+    linear-gradient(131.29deg, rgba(225, 255, 244, 0.3) 1.1%, rgba(20, 54, 41, 0) 108.32%),
+    radial-gradient(32.42% 32.42% at 46.83% 18.92%, rgba(255, 255, 255, 0.147) 0%, rgba(100, 117, 110, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  backdrop-filter: blur(10px);
+    transition: all 2s linear;
+    &_small {
+      width: 222px;
+      height: 222px;
+      z-index: 6;
+    }
+    &_medium {
+      width: 282px;
+      height: 282px;
+      z-index: 6;
+    }
+    &_big {
+      width: 330px;
+      height: 330px;
+      z-index: 4;
+    }
+  }
   &__title {
     font-size: 64px;
     font-weight: 500;
     line-height: 60px;
     text-align: left;
-    z-index: 2;
+    z-index: 11;
   }
   &__info {
     padding: 20px 60px 20px 20px;
@@ -29,14 +55,14 @@
     background: $blur;
     backdrop-filter: blur(15px);
     border: 0.5px solid #40595080;
-    z-index: 2;
+    z-index: 10;
     animation: render 0.7s ease-in-out;
   }
   &__laptop {
     position: absolute;
     right: 80px;
     top: 137px;
-    z-index: 1;
+    z-index: 5;
   }
   &__laptop-img {
     transform: rotate(0.6deg);
@@ -94,3 +120,5 @@
 
   }
 }
+
+

@@ -1,4 +1,5 @@
 import {ISlide} from "../index";
+import {Bubble} from "../Bubble/Bubble";
 
 
 export class Slider {
@@ -16,6 +17,7 @@ export class Slider {
     directionEl: HTMLParagraphElement;
     industryEl: HTMLParagraphElement;
     typeEl: HTMLParagraphElement;
+    bubbles: HTMLDivElement[];
     constructor(root: HTMLElement,slides: ISlide[]) {
         this.root = root;
         this.slides = slides;
@@ -25,27 +27,28 @@ export class Slider {
         this.createTemplate();
     }
     nextSlide() {
+        this.bubbles.forEach(item => {
+            const itemPos = item.getBoundingClientRect()
+            item.animate([
+                {left: itemPos.left + "px"},
+                {left: -500 + "px"},
+                {left: itemPos.left + "px"}
+            ], {
+                duration: 1500,
+                fill: "forwards"
+            })
+        })
         this.currentSlideIndex = this.slides[this.currentSlideIndex + 1] ? this.currentSlideIndex + 1 : 0;
         this.prevSlide = this.currentSlide;
         this.currentSlide = this.slides[this.currentSlideIndex];
-        this.changeSlide();
         this.render();
     }
-    changeSlide() {
-        this.container.animate([
-            { background: this.prevSlide.color || "white"},
-            { background: this.currentSlide.color }
-        ], {
-            duration: 600,
-            fill: "forwards"
-        });
-        this.caseImg.src = this.currentSlide.img;
-    }
-
 
     previousSlide() {
         this.currentSlideIndex = this.currentSlideIndex === 0 ? this.slides.length - 1 : this.currentSlideIndex - 1;
-        this.currentSlide = this.slides[this.currentSlideIndex]
+        this.prevSlide = this.currentSlide;
+        this.currentSlide = this.slides[this.currentSlideIndex];
+        this.render();
     }
     createTemplate() {
         this.root.innerHTML = "";
@@ -66,9 +69,11 @@ export class Slider {
         this.infoP = infoP;
         this.infoPrevBtn = document.createElement("button");
         const arrow = document.createElement("img");
-        arrow.src = "../assets/arr.png"
-        this.infoPrevBtn.insertAdjacentElement("beforeend", arrow)
+        // arrow.src = "../assets/arr.png"
+        // this.infoPrevBtn.insertAdjacentElement("beforeend", arrow)
+        this.infoPrevBtn.innerText = "Prev";
         this.infoNextBtn = document.createElement("button");
+        this.infoNextBtn.innerText = "Next";
         const img = document.createElement("img");
         img.classList.add("slider__laptop-img");
         const caseImg = document.createElement("img");
@@ -105,6 +110,7 @@ export class Slider {
         const industryTitle = document.createElement("p");
         industryTitle.classList.add("bottom-container__title");
         industryTitle.innerText = "Отрасль";
+        this.createBubbles(container);
         industryContainer.insertAdjacentElement("beforeend", industryTitle);
         industryContainer.insertAdjacentElement("beforeend", this.industryEl);
         bottomContainer.insertAdjacentElement("beforeend", directionContainer);
@@ -121,36 +127,63 @@ export class Slider {
         container.insertAdjacentElement("beforeend", title);
         container.insertAdjacentElement("beforeend", laptop);
         container.insertAdjacentElement("beforeend", info);
+
         this.root.insertAdjacentElement("beforeend", container);
-        info.addEventListener("click", () => {
+        this.infoPrevBtn.addEventListener("click", () => {
+            this.previousSlide();
+        })
+        this.infoNextBtn.addEventListener("click", () => {
             this.nextSlide();
         })
         this.render();
     }
 
-    render() {
-        // this.caseImg.animate([
-        //     {opacity: 1},
-        //     {opacity: 0}
-        // ], {
-        //     duration: 600,
-        //     fill: "forwards"
-        // } )
-        this.caseImg.src = this.currentSlide.img;
-        // this.caseImg.animate([
-        //     {opacity: 0},
-        //     {opacity: 1}
-        // ], {
-        //     duration: 1000,
-        //     fill: "forwards"
-        // } )
+    createBubbles(root: HTMLElement) {
+        const small = document.createElement("div");
+        small.classList.add("slider__bubble_small");
+        small.classList.add("slider__bubble");
+        small.style.bottom = 10 + "px";
+        small.style.left = 20 + "px";
+        const medium = document.createElement("div");
+        medium.classList.add("slider__bubble_medium")
+        medium.classList.add("slider__bubble");
+        medium.style.top = -20 + "px";
+        medium.style.left = 300 + "px";
+        const big = document.createElement("div");
+        big.classList.add("slider__bubble_big")
+        big.classList.add("slider__bubble");
+        big.style.bottom = -20 + "px";
+        big.style.right = 10 + "px";
+        root.insertAdjacentElement("beforeend", small);
+        root.insertAdjacentElement("beforeend", medium);
+        root.insertAdjacentElement("beforeend", big);
+        this.bubbles = [small, medium, big];
+    }
 
-        console.log(this.currentSlide)
+    render() {
+        this.container.animate([
+            { background: this.prevSlide?.color ||  "white"},
+            { background: this.currentSlide.color }
+        ], {
+            duration: 1500,
+            fill: "forwards"
+        });
+        this.caseImg.src = this.currentSlide.img;
+        this.caseImg.animate([
+            {opacity: 0},
+            {opacity: 1}
+        ], {
+            duration: 1500,
+            fill: "forwards"
+        } )
         this.infoP.innerText = this.currentSlide.goal;
         this.infoTitle.innerText = this.currentSlide.title;
         this.directionEl.innerText = this.currentSlide.direction;
         this.typeEl.innerText = this.currentSlide.type;
         this.industryEl.innerText = this.currentSlide.industry;
+        this.bubbles.forEach(item => {
+            new Bubble(item);
+        })
     }
 
 }
