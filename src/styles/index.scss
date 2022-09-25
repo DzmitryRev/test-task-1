@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 
 @import "vars";
-
+@import "slider";
 
 *, *:before, *:after {
   margin: 0;
@@ -13,6 +13,7 @@ body {
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
+  font-family: 'Montserrat', sans-serif;
 }
 
 img {
@@ -26,3 +27,4 @@ textarea,
 select {
   font: inherit;
 }
+

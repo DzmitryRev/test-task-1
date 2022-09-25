@@ -1,5 +1,9 @@
 import {Slider} from "./Slider/Slider";
-
+import "./styles/index.scss";
+import "./assets/laptop.png";
+import "./assets/case-1.png";
+import "./assets/case-2.png";
+import "./assets/arr.png";
 
 export interface ISlide {
     title: string;
@@ -7,17 +11,19 @@ export interface ISlide {
     type: string;
     industry: string;
     direction: string;
+    color: string;
     img: string;
 }
 
 export const slides: ISlide[] = [
     {
         title: "Создание корпоротивного сайта для холдинга 'АМКОДОР'",
-        goal: "Разработать и запустить корпоротивный сайт для холдинка 'АМКОДОР' для развития сети на рынках Беларуси и стран СНГ",
+        goal: "Разработать и запустить корпоротивный сайт для холдинка 'АМКОДОР' для развития сети на рынках Беларуси и стран СНГ.",
         type: "Корпоротивные сайты",
         direction: "WEB разработка",
-        industry: "Производство, Торговля",
-        img: ""
+        industry: "Производство",
+        color: "#8DBDBA",
+        img: "./assets/case-2.png"
     },
     {
         title: "Создание маркетплейса для бизнеса по перепродаже одежды",
@@ -25,8 +31,11 @@ export const slides: ISlide[] = [
         type: "Интернет-магазины ",
         direction: "WEB разработка",
         industry: "Торговля",
-        img: ""
+        color: "#8675BA",
+        img: "./assets/case-1.png"
     }
 ]
 
+const root = document.querySelector("#slider") as HTMLElement;
 
+new Slider(root, slides)
