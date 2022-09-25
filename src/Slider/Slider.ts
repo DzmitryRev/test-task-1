@@ -19,6 +19,7 @@ export class Slider {
     industryEl: HTMLParagraphElement;
     typeEl: HTMLParagraphElement;
     bubbles: HTMLDivElement[];
+
     constructor(root: HTMLElement,slides: ISlide[]) {
         this.root = root;
         this.slides = slides;

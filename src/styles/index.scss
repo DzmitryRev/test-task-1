@@ -2,12 +2,13 @@
 
 @import "vars";
 @import "slider";
+@import "cursor";
 
 *, *:before, *:after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default;
+  //cursor: none;
 }
 
 body {
@@ -15,6 +16,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
 }
 
 img {

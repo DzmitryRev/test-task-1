@@ -4,6 +4,7 @@ import "./assets/laptop.png";
 import "./assets/case-1.png";
 import "./assets/case-2.png";
 
+import "./Cursor/Cursor";
 export interface ISlide {
     title: string;
     goal: string;
