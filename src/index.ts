@@ -1,1 +1,4 @@
-console.log("Hello World!");
+import {Slider} from "./Slider/Slider";
+
+
+

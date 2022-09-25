@@ -1,6 +1,6 @@
 
 
-interface ISlide {
+export interface ISlide {
 
 }
 
